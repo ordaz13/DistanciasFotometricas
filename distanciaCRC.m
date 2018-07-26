@@ -14,7 +14,7 @@ if z < 0.4
     vr = z*c;
 else
     %Calculamos la velocidad recesional
-    vr = (c*z^2 + 2*c*z)/(z^2 + 2*z + 2);
+    vr = (c*z.^2 + 2*c*z)./(z.^2 + 2*z + 2);
 end
 %Calculamos la distancia (esta en Mpc)
 d = vr/H0;

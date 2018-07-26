@@ -51,6 +51,8 @@ figure(); plotregression(targetData, results); hold on;
 %Calcula la distancia a la que se encuentran los objetos a partir del
 %redshift
 distancias = abs(distanciaCRC(results));
+%Agrupamos los datos para presentarlos por grupos
+%Aqui debemos llamar la función
 %Grafica las distancias obtenidas
 figure(); plot(distancias); hold on;
 %Calcula el error relativo por muestra
