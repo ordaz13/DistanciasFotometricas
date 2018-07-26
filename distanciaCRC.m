@@ -9,8 +9,15 @@ function d = distanciaCRC(z)
 
 %Definimos las constantes
 H0 = 70; c = 3e5;
+if z < 0.4
+    %Calculamos la velocidad recesional
+    vr = z*c;
+else
+    %Calculamos la velocidad recesional
+    vr = (c*z^2 + 2*c*z)/(z^2 + 2*z + 2);
+end
 %Calculamos la distancia (esta en Mpc)
-d = (z*c)/H0;
+d = vr/H0;
 %Convertimos a kilometros
 d = d*3.08567758128e+19;
 end
