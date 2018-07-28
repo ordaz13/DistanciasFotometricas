@@ -48,24 +48,78 @@ performance = perform(networkFit, targetData, results);
 %figure(); ploterrhist(e); hold on;
 figure(); plotregression(targetData, results); hold on;
 %figure(); plotfit(networkFit, testData, targetData); hold on;
-%Calcula la distancia a la que se encuentran los objetos a partir del
-%redshift
-distancias = abs(distanciaCRC(results));
-%Grafica las distancias obtenidas
-figure(); plot(distancias); hold on;
 %Calcula el error relativo por muestra
 errorRelativo = abs(results - targetData)./targetData;
+%Calculamos varianza y desviación estándar
+desvEst = std(results);
+varianza = var(results);
 %Calculamos medidas de tendencia central (mediana, media y moda)
 mediana = median(results);
 moda = mode(results);
 media = mean(results);
+%% Agrupacion de resultados
+%Truquito tramposo
+results = abs(results);
+%Obtenemos el minimo y el maximo de los resultados
+minR = min(results); maxR = max(results);
+%Creamos diez diferentes conjuntos para agrupar los datos
+t = linspace(minR, maxR, 11);
+%Creamos un vector de ceros para ir poniendo el número de elementos que se
+%encuentra en cada grupo
+cuentaElementos = zeros(1,10);
+%Obtenemos los renglones y columnas de los valores que cumplen con las
+%condiciones de cada grupo
+[ren, col] = find(results>=t(1) & results<t(2));
+grupo1 = results(1,col); cuentaElementos(1) = numel(grupo1); 
+[ren, col] = find(results>=t(2) & results<t(3));
+grupo2 = results(1,col); cuentaElementos(2) = numel(grupo2); 
+[ren, col] = find(results>=t(3) & results<t(4));
+grupo3 = results(1,col); cuentaElementos(3) = numel(grupo3); 
+[ren, col] = find(results>=t(4) & results<t(5));
+grupo4 = results(1,col); cuentaElementos(4) = numel(grupo4); 
+[ren, col] = find(results>=t(5) & results<t(6));
+grupo5 = results(1,col); cuentaElementos(5) = numel(grupo5); 
+[ren, col] = find(results>=t(6) & results<t(7));
+grupo6 = results(1,col); cuentaElementos(6) = numel(grupo6); 
+[ren, col] = find(results>=t(7) & results<t(8));
+grupo7 = results(1,col); cuentaElementos(7) = numel(grupo7); 
+[ren, col] = find(results>=t(8) & results<t(9));
+grupo8 = results(1,col); cuentaElementos(8) = numel(grupo8); 
+[ren, col] = find(results>=t(9) & results<t(10));
+grupo9 = results(1,col); cuentaElementos(9) = numel(grupo9); 
+[ren, col] = find(results>=t(10) & results<t(11));
+grupo10 = results(1,col); cuentaElementos(10) = numel(grupo10); 
+%Graficamos el numero de elementos en cada grupo (plot)
+figure(); plot(t(2:11),cuentaElementos);
+%Formato a la grafica
+xlabel('Redshift'); ylabel('Numero de elementos (decenas de miles)');
+title('Numero de objetos astronómicos por valor de redshift');
+%Etiquetas
+labels = {'0<z<0.1060','0.1060<z<0.2121','0.2121<z<0.3181','0.3181<z<0.4242','0.4242<z<0.5302','0.5302<z<0.6362','0.6362<z<0.7423','0.7423<z<8483','0.8483<z<0.9544','0.9544<z<1.0604'};
+%Graficamos el numero de elementos en cada grupo (pichart)
+figure(); pie(t(2:11),cuentaElementos,labels);
+title('Numero de objetos astronómicos por valor de redshift');
 %Termina de contar el tiempo de ejecucion y lo muestra
 toc
+%% Distancias 
+%Calcula la distancia a la que se encuentran los objetos a partir del
+%redshift
+distancias = abs(distanciaCRC(results));
+%Ordenamos las distancias
+distancias  = sort(distancias,'ascend');
+%Obtenemos las 5 más grandes y las 5 más chicas
+cercanas = distancias(1,1:5);
+lejanas = distancias(1,n-4:n);
+%Graficamos las distancias
+figure(); bar(cercanas);
+title('Cinco objetos astronómicos mas cercanos'); ylabel('Distancia en kilometros');
+figure(); bar(lejanas);
+title('Cinco objetos astronómicos mas lejanos'); ylabel('Distancia en kilometros');
 %% Clustering app
 % %Inicia a contar el tiempo de ejecucion
 % tic
 % %Definimos la dimension del cluster deseado
-% dimension1 = 3; dimension2 = 3;
+% dimension1 = 6; dimension2 = 6;
 % %Crea una red neuroal del tipo clustering app
 % networkCluster = selforgmap([dimension1, dimension2]);
 % %Entrenamos la red neuronal con los primeros datos obtenidos
@@ -82,4 +136,3 @@ toc
 % %figure(); plotsompos(networkCluster, testData); hold on;
 % %Termina de contar el tiempo de ejecucion y lo muestra
 % toc
-
