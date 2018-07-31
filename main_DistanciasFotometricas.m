@@ -117,22 +117,22 @@ figure(); bar(lejanas);
 title('Cinco objetos astronómicos mas lejanos'); ylabel('Distancia en kilometros');
 %% Clustering app
 % %Inicia a contar el tiempo de ejecucion
-% tic
-% %Definimos la dimension del cluster deseado
-% dimension1 = 6; dimension2 = 6;
-% %Crea una red neuroal del tipo clustering app
-% networkCluster = selforgmap([dimension1, dimension2]);
-% %Entrenamos la red neuronal con los primeros datos obtenidos
-% [networkCluster, trCluster] = train(networkCluster,inputData);
-% %Ponemos a prueba la red neuronal con los segundos datos obtenidos
-% resultsC = networkCluster(testData);
-% %Graficas que indican diferentes resultados, por default se muestra la del
-% %numero de elementos por cluster y el peso de las conexiones
-% %figure(); plotsomtop(networkCluster); hold on;
-% %figure(); plotsomnc(networkCluster); hold on;
-% %figure(); plotsomnd(networkCluster); hold on;
-% %figure(); plotsomplanes(networkCluster); hold on;
-% figure(); plotsomhits(networkCluster, testData); hold on;
-% %figure(); plotsompos(networkCluster, testData); hold on;
-% %Termina de contar el tiempo de ejecucion y lo muestra
-% toc
+tic
+%Definimos la dimension del cluster deseado
+dimension1 = 6; dimension2 = 6;
+%Crea una red neuroal del tipo clustering app
+networkCluster = selforgmap([dimension1, dimension2]);
+%Entrenamos la red neuronal con los primeros datos obtenidos
+[networkCluster, trCluster] = train(networkCluster,inputData);
+%Ponemos a prueba la red neuronal con los segundos datos obtenidos
+resultsC = networkCluster(testData);
+%Graficas que indican diferentes resultados, por default se muestra la del
+%numero de elementos por cluster y el peso de las conexiones
+%figure(); plotsomtop(networkCluster); hold on;
+%figure(); plotsomnc(networkCluster); hold on;
+%figure(); plotsomnd(networkCluster); hold on;
+%figure(); plotsomplanes(networkCluster); hold on;
+figure(); plotsomhits(networkCluster, testData); hold on;
+%figure(); plotsompos(networkCluster, testData); hold on;
+%Termina de contar el tiempo de ejecucion y lo muestra
+toc
